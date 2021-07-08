@@ -37,6 +37,57 @@ mpl.get_backend()
 # The popular JavaScript library, for instance, D3.JS is an example of a declarative information visualization method.
 # While matplotlib's pyplot is an example of a procedural information visualization method.
 
+# MAKING GRAPHS USING PLOT FUNCTION
+
+# A plot has two axes, an x-axis along the horizon, and a y-axis which runs vertically.
+
+import matplotlib.pyplot as plt
+# supports any number of named and unnamed arguments the arguments will be interpreted as x, y pairs
+
+# because the default is the line style '-',
+# nothing will be shown if we only pass in one point (3,2)
+plt.plot(3,2)
+
+# we can pass in '.' to plt.plot to indicate that we want
+# the point (3,2) to be indicated with a marker '.'
+plt.plot(3,2,'.')
+
+# create a new figure
+plt.figure()
+
+# plot the point (3,2) using the circle marker
+plt.plot(3, 2, 'o')
+
+# get the current axes
+ax = plt.gca()
+
+# Set axis properties [xmin, xmax, ymin, ymax]
+ax.axis([0,6,0,10])
+
+# create a new figure
+plt.figure()
+
+# plot the point (1.5, 1.5) using the circle marker
+plt.plot(1.5, 1.5, 'o')
+# plot the point (2, 2) using the circle marker
+plt.plot(2, 2, 'o')
+# plot the point (2.5, 2.5) using the circle marker
+plt.plot(2.5, 2.5, 'o')
+
+# we can go further with the axes object to the point where we can actually get all of the child objects that that axes
+# contains. We do this with the axes get_children function.
+
+# get current axes
+ax = plt.gca()
+# get all the child objects the axes contains
+ax.get_children()
+
+# Here, we can see that there's actually three line to the objects contained in this axes, these are our data points.
+# A number of spines which are actual renderings of the borders of the frame including tic markers, two axis objects,
+# and a bunch of text which are the labels for the chart. There's even a rectangle which is the background for the axes.
+
+
+
 
 
 
