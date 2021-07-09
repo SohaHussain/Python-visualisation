@@ -161,8 +161,63 @@ plt.legend()
 # add the legend to loc=4 (the lower right hand corner), also gets rid of the frame and adds a title
 plt.legend(loc=4, frameon=False, title='Legend')
 
+# Line Plots
 
+import numpy as np
 
+linear_data=np.array([1,2,3,4,5,6,7,8])
+exponential_data=linear_data**2
 
+plt.figure()
+plt.plot(linear_data,'-o',exponential_data,'-o')
 
+# So there are a couple of things which are new about this versus the scatter plots. First, we only gave y-axes values
+# to our plot call, no x axes values. Instead, the plot function was smart enough to figure out that what we wanted was
+# to use the index of the series as the x value. Which is pretty handy when you want to make quick plots.
+
+# Second we see that the plot identifies this as two series of data and that the colors of the data from the series are
+# different including the data points and the lines between the data points. This is different from the scatter plot
+# which required us to label the lines directly.
+
+# plot another series with a dashed red line
+plt.plot([22,44,55], '--r')
+
+plt.xlabel('Some data')
+plt.ylabel('Some other data')
+plt.title('A title')
+# add a legend with legend entries (because we didn't have labels when we plotted the data series)
+plt.legend(['Baseline', 'Competition', 'Us'])
+
+# fill the area between the linear data and exponential data
+plt.gca().fill_between(range(len(linear_data))# length
+                       ,linear_data # lower bound
+                       , exponential_data # upper bound
+                       ,facecolor='blue' # color to fill with
+                       ,alpha=0.25 # transparency
+                      )
+
+# working with dates
+
+plt.figure()
+
+observation_dates = np.arange('2017-01-01', '2017-01-09', dtype='datetime64[D]')
+
+plt.plot(observation_dates, linear_data, '-o',  observation_dates, exponential_data, '-o')
+
+x = plt.gca().xaxis
+
+# rotate the tick labels for the x axis
+for item in x.get_ticklabels():
+    item.set_rotation(45)
+
+# adjust the subplot so the text doesn't run off the image
+plt.subplots_adjust(bottom=0.25)
+
+ax = plt.gca()
+ax.set_xlabel('Date')
+ax.set_ylabel('Units')
+ax.set_title('Exponential vs. Linear performance')
+
+# you can add mathematical expressions in any text element
+ax.set_title("Exponential ($x^2$) vs. Linear ($x$) performance")
 
