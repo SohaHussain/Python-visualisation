@@ -221,3 +221,45 @@ ax.set_title('Exponential vs. Linear performance')
 # you can add mathematical expressions in any text element
 ax.set_title("Exponential ($x^2$) vs. Linear ($x$) performance")
 
+# Bar Charts
+
+# Matplotlib has support for several kinds of bar charts. The most general case, we plot a bar chart by sending in a
+# parameter of the x components, and a parameter of the height of the bar.
+
+plt.figure()
+xvals=range(len(linear_data))
+plt.bar(xvals,linear_data,width=0.3)
+
+new_xvals=[]
+
+# plot another set of bars, adjusting the new xvals to make up for the first set of bars plotted
+for item in xvals:
+    new_xvals.append(item+0.3)
+plt.bar(new_xvals,exponential_data,width=0.3,color='red')
+
+# you can add error bars to each bar as well, using the y-error parameter.
+#
+# For example, each of our pieces of data in the linear data might actually be a mean value, computed from many
+# different observations.
+
+from random import randint
+linear_err = [randint(0,15) for x in range(len(linear_data))]
+
+# This will plot a new set of bars with errorbars using the list of random error values
+plt.bar(xvals, linear_data, width = 0.3, yerr=linear_err)
+
+# We can also do stacked bar charts as well. For instance, if we wanted to show cumulative values while also keeping the
+# series independent, we could do this by setting the bottom parameter and our second plot to be equal to first set of
+# data to plot.
+
+# stacked bar charts are also possible
+plt.figure()
+xvals = range(len(linear_data))
+plt.bar(xvals, linear_data, width = 0.3, color='b')
+plt.bar(xvals, exponential_data, width = 0.3, bottom=linear_data, color='r')
+
+# or use barh for horizontal bar charts
+plt.figure()
+xvals = range(len(linear_data))
+plt.barh(xvals, linear_data, height = 0.3, color='b')
+plt.barh(xvals, exponential_data, height = 0.3, left=linear_data, color='r')
