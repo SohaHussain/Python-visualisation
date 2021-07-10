@@ -102,4 +102,79 @@ for ax in [top_histogram, lower_right]:
 for ax in [side_histogram, lower_right]:
     ax.set_ylim(-5, 5)
 
+# Box and Whisker plots
+
+# A box plot. Sometimes called a box-and-whisker plot is a method of showing aggregate statistics of various samples
+# in a concise matter.
+# The box plot simultaneously shows, for each sample, the median of each value, the minimum and maximum of the samples,
+# and the interquartile range.
+
+import pandas as pd
+normal_sample = np.random.normal(loc=0.0, scale=1.0, size=10000)
+random_sample = np.random.random(size=10000)
+gamma_sample = np.random.gamma(2, size=10000)
+
+df = pd.DataFrame({'normal': normal_sample,
+                   'random': random_sample,
+                   'gamma': gamma_sample})
+
+df.describe()
+
+# Like standard deviation, the interquartile range is a measure of variability of data. And it's common to plot this
+# using a box plot.
+
+# In a box plot, the mean, or the median, of the data is plotted as a straight line. Two boxes are formed, one above,
+# which represents the 50% to 75% data group, and one below, which represents the 25% to 50% data group. Thin lines
+# which are capped are then drawn out to the minimum and maximum values.
+
+# Like standard deviation, the interquartile range is a measure of variability of data. And it's common to plot this using a box plot.
+#
+# In a box plot, the mean, or the median, of the data is plotted as a straight line. Two boxes are formed, one above,
+# which represents the 50% to 75% data group, and one below, which represents the 25% to 50% data group. Thin lines
+# which are capped are then drawn out to the minimum and maximum values.
+
+plt.figure()
+# create a boxplot of the normal data, assign the output to a variable to supress output
+_ = plt.boxplot(df['normal'], whis=10000.0)
+# whis tells the box plot to set the whisker values all the way out to the minimum and maximum values
+
+# clear the current figure
+plt.clf()
+# plot boxplots for all three of df's columns
+_ = plt.boxplot([ df['normal'], df['random'], df['gamma'] ], whis=10000.0)
+
+# if we look at the gamma distribution, for instance, we see the tail of it is very, very long. So the maximum values
+# are very far out.
+
+plt.figure()
+_ = plt.hist(df['gamma'], bins=100)
+
+# We can actually overlay an axes on top of another within a figure. Now, this functionality isn't in the basic
+# matplotlib space, but it's in the toolkits, which tend to ship with matplotlib.
+#
+# The toolkit that we're going to use is called the axes grid, and we import it from the
+# mpl_toolkits.axes_grid1.inset_locator.
+
+# We create a new figure and we put up our box plot.
+#
+# Then we just call the inset locator and pass it the current axes object we want composition on top of, followed by the
+# size of our new axis. And we can specify this as both a width and a height in percentage from the parent axes. Then we
+# give it a number from the place in which we wanted to drop the new axes.
+
+import mpl_toolkits.axes_grid1.inset_locator as mpl_il
+
+plt.figure()
+plt.boxplot([ df['normal'], df['random'], df['gamma'] ], whis=10000.0)
+# overlay axis on top of another
+ax2 = mpl_il.inset_axes(plt.gca(), width='60%', height='40%', loc=2)
+ax2.hist(df['gamma'], bins=100)
+ax2.margins(x=0.5)
+
+# switch the y axis ticks for ax2 to the right side
+ax2.yaxis.tick_right()
+
+# if `whis` argument isn't passed, boxplot defaults to showing 1.5*interquartile (IQR) whiskers with outliers
+plt.figure()
+_ = plt.boxplot([ df['normal'], df['random'], df['gamma'] ] )
+
 
